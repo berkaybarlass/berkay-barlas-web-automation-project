@@ -1,4 +1,3 @@
-BASE_URL = "https://insiderone.com/"
 EXPECTED_HOME_URL = "https://insiderone.com/"
 EXPECTED_HOME_TITLE_KEYWORD = "Insider"
 

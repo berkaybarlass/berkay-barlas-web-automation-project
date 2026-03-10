@@ -40,7 +40,11 @@ class BasePage:
 
     def find_all(self, locator):
         self.logger.info(f"Finding all elements: {locator}")
-        return self.driver.find_elements(*locator)
+        try:
+            return self.wait.until(EC.presence_of_all_elements_located(locator))
+        except TimeoutException:
+            self.logger.warning(f"No elements found for locator: {locator}")
+            return []
 
     def is_visible(self, locator):
         try:
@@ -60,15 +64,6 @@ class BasePage:
         title = self.driver.title
         self.logger.info(f"Page title: {title}")
         return title
-
-    def scroll_into_view(self, locator):
-        element = self.wait_for_presence(locator)
-        self.logger.info(f"Scrolling element into view: {locator}")
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block: 'center'});",
-            element
-        )
-        return element
 
     def wait_for_document_ready(self):
         self.logger.info("Waiting for document.readyState to be complete")

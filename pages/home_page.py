@@ -1,7 +1,8 @@
-from config.config import BASE_URL, EXPECTED_HOME_TITLE_KEYWORD, EXPECTED_HOME_URL
+from config.config import EXPECTED_HOME_TITLE_KEYWORD, EXPECTED_HOME_URL
 from selenium.common.exceptions import TimeoutException
 from locators.home_page_locators import HomePageLocators
 from pages.base_page import BasePage
+from data.urls import BASE_URL
 
 
 class HomePage(BasePage):
