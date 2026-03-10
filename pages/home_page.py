@@ -1,5 +1,4 @@
 from config.config import EXPECTED_HOME_TITLE_KEYWORD, EXPECTED_HOME_URL
-from selenium.common.exceptions import TimeoutException
 from locators.home_page_locators import HomePageLocators
 from pages.base_page import BasePage
 from data.urls import BASE_URL
@@ -46,7 +45,3 @@ class HomePage(BasePage):
             footer_visible and
             len(sections) > 0
         )
-
-    def load_home_page_and_prepare(self, minimum_section_count=1):
-        self.go_to_home_page()
-        self.wait_for_lazy_loaded_sections(minimum_section_count)
