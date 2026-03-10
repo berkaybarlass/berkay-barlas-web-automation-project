@@ -10,30 +10,6 @@ class HomePage(BasePage):
         self.open(BASE_URL)
         self.wait_for_document_ready()
 
-    def handle_cookie_banner(self, action="accept_all"):
-        cookie_actions = {
-            "accept_all": HomePageLocators.COOKIE_ACCEPT_ALL_BUTTON,
-            "only_necessary": HomePageLocators.COOKIE_ONLY_NECESSARY_BUTTON,
-            "decline_all": HomePageLocators.COOKIE_DECLINE_ALL_BUTTON,
-        }
-
-        if action not in cookie_actions:
-            raise ValueError(
-                f"Unsupported cookie action: {action}. "
-                f"Use one of: {list(cookie_actions.keys())}"
-            )
-
-        locator = cookie_actions[action]
-
-        try:
-            if self.is_visible(locator):
-                self.logger.info(f"Cookie banner action selected: {action}")
-                self.click(locator)
-            else:
-                self.logger.info("Cookie banner is not visible.")
-        except TimeoutException:
-            self.logger.info("Cookie banner did not appear.")
-
     def wait_for_lazy_loaded_sections(self, minimum_section_count=1):
         self.logger.info(
             f"Waiting for at least {minimum_section_count} sections to be loaded."
@@ -70,7 +46,6 @@ class HomePage(BasePage):
             len(sections) > 0
         )
 
-    def load_home_page_and_prepare(self, cookie_action="only_necessary", minimum_section_count=1):
+    def load_home_page_and_prepare(self, minimum_section_count=1):
         self.go_to_home_page()
-        self.handle_cookie_banner(cookie_action)
         self.wait_for_lazy_loaded_sections(minimum_section_count)
