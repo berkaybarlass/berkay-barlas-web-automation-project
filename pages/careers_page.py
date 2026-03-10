@@ -1,4 +1,4 @@
-from selenium.webdriver.support.wait import WebDriverWait
+import time
 
 from data.urls import CAREERS_URL, LEVER_QA_JOB_URL
 from locators.careers_page_locators import CareersPageLocators
@@ -18,8 +18,7 @@ class CareersPage(BasePage):
 
     def wait_for_positions_to_load(self):
         self.logger.info("Waiting for QA positions count to be greater than 0")
-
-        WebDriverWait(self.driver, 10).until(
+        self.wait.until(
             lambda driver: int(
                 driver.find_element(*CareersPageLocators.QUALITY_ASSURANCE_POSITIONS_CARD)
                 .text.split()[0]
@@ -30,7 +29,8 @@ class CareersPage(BasePage):
         element = self.wait_for_visibility(
             CareersPageLocators.SELECTED_TEAM_FILTER_LABEL
         )
-        return "Quality Assurance" in element.text
+        self.logger.info(f"Filter label text: '{element.text}'")
+        return "QUALITY ASSURANCE" in element.text
 
     def are_job_postings_present(self):
         jobs = self.find_all(CareersPageLocators.JOB_POSTINGS)
@@ -53,6 +53,16 @@ class CareersPage(BasePage):
 
             assert "Quality Assurance" in title
             assert "ISTANBUL, TURKIYE" in location
+
+    def get_job_cards_data(self):
+        jobs = self.find_all(CareersPageLocators.JOB_POSTINGS)
+        self.logger.info(f"Found {len(jobs)} job postings")
+        result = []
+        for job in jobs:
+            title = job.find_element(*CareersPageLocators.JOB_TITLE).text
+            location = job.find_element(*CareersPageLocators.JOB_LOCATION).text
+            result.append({"title": title, "location": location})
+        return result
 
     def click_apply_button(self):
         self.click(CareersPageLocators.APPLY_BUTTON)
