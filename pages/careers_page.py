@@ -1,6 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 
-from data.urls import CAREERS_URL
+from data.urls import CAREERS_URL, LEVER_QA_JOB_URL
 from locators.careers_page_locators import CareersPageLocators
 from pages.base_page import BasePage
 
@@ -53,3 +53,14 @@ class CareersPage(BasePage):
 
             assert "Quality Assurance" in title
             assert "ISTANBUL, TURKIYE" in location
+
+    def click_apply_button(self):
+        self.click(CareersPageLocators.APPLY_BUTTON)
+
+    def is_view_role_redirected_to_expected_lever_url(self):
+        expected_url = LEVER_QA_JOB_URL
+        current_url = self.get_current_url().rstrip("/")
+
+        self.logger.info(f"Current URL after View Role click: {current_url}")
+
+        return current_url == expected_url.rstrip("/")
