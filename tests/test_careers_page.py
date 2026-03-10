@@ -15,3 +15,5 @@ class TestCareersPage:
             careers_page.wait_for_positions_to_load()
             careers_page.click_open_qa_positions()
             careers_page.is_quality_assurance_filter_selected()
+            assert careers_page.are_job_postings_present(), \
+                "No job postings were found for Quality Assurance filter."

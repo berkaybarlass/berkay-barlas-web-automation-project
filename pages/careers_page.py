@@ -31,3 +31,10 @@ class CareersPage(BasePage):
             CareersPageLocators.SELECTED_TEAM_FILTER_LABEL
         )
         return "Quality Assurance" in element.text
+
+    def are_job_postings_present(self):
+        jobs = self.find_all(CareersPageLocators.JOB_POSTINGS)
+
+        self.logger.info(f"Found {len(jobs)} job postings")
+
+        return len(jobs) > 0
