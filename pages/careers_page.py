@@ -38,3 +38,18 @@ class CareersPage(BasePage):
         self.logger.info(f"Found {len(jobs)} job postings")
 
         return len(jobs) > 0
+
+    def select_location(self):
+        self.click(CareersPageLocators.LOCATION_FILTER)
+        self.click(CareersPageLocators.LOCATION_ISTANBUL)
+
+    def validate_job_cards(self):
+        jobs = self.find_all(CareersPageLocators.JOB_POSTINGS)
+        self.logger.info(f"Found {len(jobs)} job postings")
+
+        for job in jobs:
+            title = job.find_element(*CareersPageLocators.JOB_TITLE).text
+            location = job.find_element(*CareersPageLocators.JOB_LOCATION).text
+
+            assert "Quality Assurance" in title
+            assert "ISTANBUL, TURKIYE" in location

@@ -17,3 +17,18 @@ class TestCareersPage:
             careers_page.is_quality_assurance_filter_selected()
             assert careers_page.are_job_postings_present(), \
                 "No job postings were found for Quality Assurance filter."
+
+        def test_qa_jobs_match_expected_position_department_and_location(self, driver):
+            careers_page = CareersPage(driver)
+            site_flow = SiteFlow(careers_page)
+
+            careers_page.open_page()
+            site_flow.handle_cookie_banner("only_necessary")
+            careers_page.click_see_all_teams()
+            careers_page.wait_for_positions_to_load()
+            careers_page.click_open_qa_positions()
+            careers_page.is_quality_assurance_filter_selected()
+            assert careers_page.are_job_postings_present(), \
+                "No job postings were found for Quality Assurance filter."
+            careers_page.select_location()
+            careers_page.validate_job_cards()
