@@ -18,3 +18,6 @@ class PetAPI(BaseAPI):
 
     def find_by_status(self, status: str) -> requests.Response:
         return self.get("/pet/findByStatus", params={"status": status})
+
+    def delete_pet_without_id(self) -> requests.Response:
+        return self.delete("/pet")
