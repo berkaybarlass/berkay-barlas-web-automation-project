@@ -15,8 +15,10 @@ class BasePage:
         self.logger = get_logger(self.__class__.__name__)
 
     def open(self, url):
-        self.logger.info(f"Opening URL: {url}")
+        self.logger.info(f"Navigating to: {url}")
         self.driver.get(url)
+        self.wait_for_document_ready()
+        self.logger.info(f"Page ready: {url}")
 
     def wait_for_visibility(self, locator):
         self.logger.info(f"Waiting for visibility of locator: {locator}")

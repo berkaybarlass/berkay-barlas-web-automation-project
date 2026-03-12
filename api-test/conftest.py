@@ -1,9 +1,9 @@
 import pytest
 from api.pet_api import PetAPI
+from config.config import BASE_URL
 from models.pet_model import PetBuilder
 from utils.logger import get_logger
 
-BASE_URL = "https://petstore.swagger.io/v2"
 logger = get_logger("conftest")
 
 
@@ -14,9 +14,7 @@ def pet_api() -> PetAPI:
 
 @pytest.fixture
 def created_pet(pet_api):
-    """
-    Her test öncesi pet oluşturur, test bittikten sonra siler.
-    """
+
     payload = PetBuilder.full(name="FixturePet", status="available")
     response = pet_api.create_pet(payload)
 
