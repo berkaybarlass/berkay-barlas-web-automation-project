@@ -1,5 +1,3 @@
-import time
-
 from data.urls import CAREERS_URL, LEVER_QA_JOB_URL
 from locators.careers_page_locators import CareersPageLocators
 from pages.base_page import BasePage
@@ -42,17 +40,6 @@ class CareersPage(BasePage):
     def select_location(self):
         self.click(CareersPageLocators.LOCATION_FILTER)
         self.click(CareersPageLocators.LOCATION_ISTANBUL)
-
-    def validate_job_cards(self):
-        jobs = self.find_all(CareersPageLocators.JOB_POSTINGS)
-        self.logger.info(f"Found {len(jobs)} job postings")
-
-        for job in jobs:
-            title = job.find_element(*CareersPageLocators.JOB_TITLE).text
-            location = job.find_element(*CareersPageLocators.JOB_LOCATION).text
-
-            assert "Quality Assurance" in title
-            assert "ISTANBUL, TURKIYE" in location
 
     def get_job_cards_data(self):
         jobs = self.find_all(CareersPageLocators.JOB_POSTINGS)

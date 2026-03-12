@@ -3,12 +3,13 @@ from datetime import datetime
 
 import pytest
 
-from config.config import SCREENSHOT_DIR
 from utils.driver_factory import DriverFactory
 from utils.logger import get_logger
 
 
 logger = get_logger(__name__)
+
+SCREENSHOT_DIR = os.path.join(os.path.dirname(__file__), "reports", "screenshots")
 
 
 def pytest_addoption(parser):

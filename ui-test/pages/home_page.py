@@ -1,22 +1,9 @@
 from config.config import EXPECTED_HOME_TITLE_KEYWORD, EXPECTED_HOME_URL
 from locators.home_page_locators import HomePageLocators
 from pages.base_page import BasePage
-from data.urls import BASE_URL
 
 
 class HomePage(BasePage):
-
-    def go_to_home_page(self):
-        self.open(BASE_URL)
-        self.wait_for_document_ready()
-
-    def wait_for_lazy_loaded_sections(self, minimum_section_count=1):
-        self.logger.info(
-            f"Waiting for at least {minimum_section_count} sections to be loaded."
-        )
-        self.wait.until(
-            lambda driver: len(driver.find_elements(*HomePageLocators.ALL_SECTIONS)) >= minimum_section_count
-        )
 
     def is_home_page_url_correct(self):
         current_url = self.get_current_url().rstrip("/")
